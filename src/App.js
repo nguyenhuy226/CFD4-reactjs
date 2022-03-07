@@ -18,14 +18,14 @@ function App() {
     // <Home />
     // <Profile />
     // <Project />
-    // <Register />
+    <Register />
     // <Team />
     // <Pays />
     // <Courses />
     // <Cooperate />
     // <Fag />
     // <Email />
-    <Detail />
+    // <Detail />
     // <Fail />
   );
 }

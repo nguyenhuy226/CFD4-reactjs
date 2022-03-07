@@ -1,8 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 
+
+
+const style = {
+  inputStyle : {color : 'red' , fontSize : 14}
+}
 export default function Register() {
+  let [form, setForm] = useState({
+    userName: '',
+    phone:'',
+    email:'',
+    fb: '',
+    payment:'chuyen-khoan',
+    note :''
+  })
+  let [error , setError] = useState()
+
+
+  function inputChange (e) {
+    let val = e.target.value
+    let name = e.target.getAttribute('name')
+    setForm({
+      ...form,
+      [name] : val
+    })
+  }
+
+  function submitBtn () {
+    let error = {} 
+    if(!form.userName) {
+      error['userName'] = "Username không được để trống"
+    }
+    if(!form.email) {
+      error['email'] = "email không được để trống"
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.email)) {
+      error['email'] = "email không đúng định dạng"
+    }
+    if(!form.fb) {
+      error['fb'] = "fb không được để trống"
+    }
+    if(!form.phone) {
+      error['phone'] = "phone không được để trống"
+    }
+    if(!form.note) {
+      error['note'] = "note không được để trống"
+    }
+    setError(error)
+
+    if(Object.keys(error).length === 0 ) {
+      alert("thành công")
+    }
+  }
+
+
   return (
     <>  
         <Header />
@@ -21,20 +73,32 @@ export default function Register() {
                 <div className="form">
                   <label>
                     <p>Họ và tên<span>*</span></p>
-                    <input type="text" placeholder="Họ và tên bạn" />
+                    <input type="text" placeholder="Họ và tên bạn"  onChange={inputChange} name="userName" value={form.userName}/>
                   </label>
+                  {
+                    error.userName ? <p className='error' style={style.inputStyle}>{error.userName}</p> : null 
+                  }
                   <label>
                     <p>Số điện thoại<span>*</span></p>
-                    <input type="text" placeholder="Số điện thoại" />
+                    <input type="text" placeholder="Số điện thoại" onChange={inputChange} name="phone" value={form.phone}/>
                   </label>
+                  {
+                    error.phone ? <p className='error' style={style.inputStyle}>{error.phone}</p> : null 
+                  }
                   <label>
                     <p>Email<span>*</span></p>
-                    <input type="text" placeholder="Email của bạn" />
+                    <input type="text" placeholder="Email của bạn" onChange={inputChange} name="email" value={form.email} />
                   </label>
+                  {
+                    error.email ? <p className='error' style={style.inputStyle}>{error.email}</p> : null 
+                  }
                   <label>
                     <p>URL Facebook<span>*</span></p>
-                    <input type="text" placeholder="https://facebook.com" />
+                    <input type="text" placeholder="https://facebook.com"  onChange={inputChange}  name="fb" value={form.fb}/>
                   </label>
+                  {
+                    error.fb ? <p className='error' style={style.inputStyle}>{error.fb}</p> : null 
+                  }
                   <label className="disable">
                     <p>Sử dụng COIN</p>
                     <div className="checkcontainer">
@@ -57,9 +121,12 @@ export default function Register() {
                   </label>
                   <label>
                     <p>Ý kiến cá nhân</p>
-                    <input type="text" placeholder="Mong muốn cá nhân và lịch bạn có thể học." />
+                    <input type="text" placeholder="Mong muốn cá nhân và lịch bạn có thể học." onChange={inputChange} name="note" value={form.note} />
                   </label>
-                  <div className="btn main rect">đăng ký</div>
+                  {
+                    error.note ? <p className='error' style={style.inputStyle}>{error.note}</p> : null 
+                  }
+                  <div className="btn main rect" onClick={submitBtn}>đăng ký</div>
                 </div>
               </div>
             </div>
