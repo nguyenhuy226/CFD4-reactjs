@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Tag3() {
   return (
-    <div className="tab3" style={{display: 'none'}}>
+    <div className="tab3" style={{display: 'block'}}>
     <div className="row">
       <div className="col-md-6 course">
         <div className="wrap">

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Tag4() {
   return (
-    <div className="tab4" style={{display: 'none'}}>
+    <div className="tab4" style={{display: 'block'}}>
         <div className="item itemhistory">
             <div className="name">Khóa học CFD1-offline</div>
             <div className="date">09/09/2020</div>

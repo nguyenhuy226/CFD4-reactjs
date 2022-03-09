@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
+
+import PopupLogin from '../../components/PopupLogin'
 
 
 
@@ -16,7 +16,7 @@ export default function Register() {
     payment:'chuyen-khoan',
     note :''
   })
-  let [error , setError] = useState()
+  let [error , setError] = useState({})
 
 
   function inputChange (e) {
@@ -48,8 +48,7 @@ export default function Register() {
       error['note'] = "note không được để trống"
     }
     setError(error)
-
-    if(Object.keys(error).length === 0 ) {
+    if(Object.keys(error).length === 0) {
       alert("thành công")
     }
   }
@@ -57,7 +56,6 @@ export default function Register() {
 
   return (
     <>  
-        <Header />
         <div className="overlay_nav" />
         <main className="register-course" id="main">
           <section>
@@ -76,28 +74,28 @@ export default function Register() {
                     <input type="text" placeholder="Họ và tên bạn"  onChange={inputChange} name="userName" value={form.userName}/>
                   </label>
                   {
-                    error.userName ? <p className='error' style={style.inputStyle}>{error.userName}</p> : null 
+                    error.userName && <p className='error' style={style.inputStyle}>{error.userName}</p>
                   }
                   <label>
                     <p>Số điện thoại<span>*</span></p>
                     <input type="text" placeholder="Số điện thoại" onChange={inputChange} name="phone" value={form.phone}/>
                   </label>
                   {
-                    error.phone ? <p className='error' style={style.inputStyle}>{error.phone}</p> : null 
+                    error.phone && <p className='error' style={style.inputStyle}>{error.phone}</p>
                   }
                   <label>
                     <p>Email<span>*</span></p>
                     <input type="text" placeholder="Email của bạn" onChange={inputChange} name="email" value={form.email} />
                   </label>
                   {
-                    error.email ? <p className='error' style={style.inputStyle}>{error.email}</p> : null 
+                    error.email && <p className='error' style={style.inputStyle}>{error.email}</p>
                   }
                   <label>
                     <p>URL Facebook<span>*</span></p>
                     <input type="text" placeholder="https://facebook.com"  onChange={inputChange}  name="fb" value={form.fb}/>
                   </label>
                   {
-                    error.fb ? <p className='error' style={style.inputStyle}>{error.fb}</p> : null 
+                    error.fb && <p className='error' style={style.inputStyle}>{error.fb}</p>
                   }
                   <label className="disable">
                     <p>Sử dụng COIN</p>
@@ -124,7 +122,7 @@ export default function Register() {
                     <input type="text" placeholder="Mong muốn cá nhân và lịch bạn có thể học." onChange={inputChange} name="note" value={form.note} />
                   </label>
                   {
-                    error.note ? <p className='error' style={style.inputStyle}>{error.note}</p> : null 
+                    error.note && <p className='error' style={style.inputStyle}>{error.note}</p>
                   }
                   <div className="btn main rect" onClick={submitBtn}>đăng ký</div>
                 </div>
@@ -143,71 +141,7 @@ export default function Register() {
             <a href="/" class="btn main rect">về trang chủ</a>
         </div> */}
         </main>
-        <Footer />
-         {/* popup video homepage */}
-         <div className="popup-video" style={{display: 'none'}}>
-        <div className="wrap">
-            <div className="video-src" />
-        </div>
-        <div className="close" />
-        </div>
-        <div className="popup-form popup-login" style={{display: 'none'}}>
-        <div className="wrap">
-            {/* login-form */}
-            <div className="ct_login" style={{display: 'block'}}>
-            <h2 className="title">Đăng nhập</h2>
-            <input type="text" placeholder="Email / Số điện thoại" />
-            <input type="password" placeholder="Mật khẩu" />
-            <div className="remember">
-                <label className="btn-remember">
-                <div>
-                    <input type="checkbox" />
-                </div>
-                <p>Nhớ mật khẩu</p>
-                </label>
-                <a href="#" className="forget">Quên mật khẩu?</a>
-            </div>
-            <div className="btn rect main btn-login">đăng nhập</div>
-            <div className="text-register" style={{}}>
-                <strong>hoặc đăng ký bằng</strong>
-            </div>
-            <div>
-                <div className="btn btn-icon rect white btn-google">
-                <img src="img/google.svg" alt="" />
-                Google
-                </div>
-            </div>
-            <div className="close">
-                <img src="img/close-icon.png" alt="" />
-            </div>
-            </div>
-            {/* email form */}
-            <div className="ct_email">
-            <h2 className="title">Đặt lại mật khẩu</h2>
-            <input type="text" placeholder="Email" />
-            <div className="btn rect main btn-next">Tiếp theo</div>
-            <div className="back" />
-            <div className="close">
-                <img src="img/close-icon.png" alt="" />
-            </div>
-            </div>
-        </div>
-        </div>
-        <div className="popup-form popup-login" style={{display: 'none'}}>
-        <div className="wrap">
-            <h2 className="title">Đăng ký</h2>
-            <div className="btn btn-icon rect white btn-google">
-            <img src="img/google.svg" alt="" />
-            Google
-            </div>
-            <p className="policy">
-            Bằng việc đăng kí, bạn đã đồng ý <a href="#">Điều khoản bảo mật</a> của CFD
-            </p>
-            <div className="close">
-            <img src="img/close-icon.png" alt="" />
-            </div>
-        </div>
-        </div>
+        <PopupLogin />
     </>
   )
 }
