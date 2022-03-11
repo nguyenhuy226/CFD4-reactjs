@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 import PopupLogin from '../../components/PopupLogin'
+import useValidateForm from '../../Hook/useValidateForm'
+
 
 
 
@@ -8,50 +10,52 @@ const style = {
   inputStyle : {color : 'red' , fontSize : 14}
 }
 export default function Register() {
-  let [form, setForm] = useState({
+  
+
+  let {form ,error , inputChange , submit  } = useValidateForm({
     userName: '',
     phone:'',
     email:'',
     fb: '',
-    payment:'chuyen-khoan',
-    note :''
+  } , {
+    rule : {
+      userName: {
+        required : true
+      },
+      email: {
+        pattern : 'email'
+      },
+      phone: {
+        pattern : 'phone'
+      },
+      fb: {
+        pattern : 'url'
+      },
+    },
+    message : {
+      userName: {
+        required : 'trường này không được để trống'
+      },
+      phone: {
+        pattern : 'nhập số diện thoại không đúng định dạng'
+      },
+      email: {
+        pattern : 'nhập email không đúng định dạng'
+      },
+      fb:  {
+        pattern : 'nhập url không đúng định dạng'
+      },
+    }
   })
-  let [error , setError] = useState({})
-
-
-  function inputChange (e) {
-    let val = e.target.value
-    let name = e.target.getAttribute('name')
-    setForm({
-      ...form,
-      [name] : val
-    })
-  }
-
-  function submitBtn () {
-    let error = {} 
-    if(!form.userName) {
-      error['userName'] = "Username không được để trống"
-    }
-    if(!form.email) {
-      error['email'] = "email không được để trống"
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.email)) {
-      error['email'] = "email không đúng định dạng"
-    }
-    if(!form.fb) {
-      error['fb'] = "fb không được để trống"
-    }
-    if(!form.phone) {
-      error['phone'] = "phone không được để trống"
-    }
-    if(!form.note) {
-      error['note'] = "note không được để trống"
-    }
-    setError(error)
+  
+  function submitBtn() {
+    let error = submit()
+    console.log(error)
     if(Object.keys(error).length === 0) {
-      alert("thành công")
+      // alert("thành công")
     }
-  }
+  } 
+  
 
 
   return (
@@ -101,7 +105,7 @@ export default function Register() {
                     <p>Sử dụng COIN</p>
                     <div className="checkcontainer">
                       Hiện có <strong>300 COIN</strong>
-                      {/* Giảm giá còn <span><strong>5.800.000 VND</strong>, còn lại 100 COIN</span> */}
+                      Giảm giá còn <span><strong>5.800.000 VND</strong>, còn lại 100 COIN</span>
                       {/* Cần ít nhất 200 COIN để giảm giá */}
                       <input type="checkbox" defaultChecked="checked" />
                       <span className="checkmark" />

@@ -1,57 +1,65 @@
 import React, { useState } from 'react'
 
 import PopupLogin from '../../components/PopupLogin'
+import useValidateForm from '../../Hook/useValidateForm'
 
 
 const style = {
   inputStyle : {color : 'red' , fontSize : 14}
 }
 export default function Cooperate() {
-
-  let [form, setForm] = useState({
+  
+  let {form ,error , inputChange , submit  } = useValidateForm({
     userName: '',
     phone:'',
     email:'',
-    title: '',
-    website:''
+    fb: '',
+    tittle: '',
+  } , {
+    rule : {
+      userName: {
+        required : true
+      },
+      title: {
+        required : true
+      },
+      email: {
+        pattern : 'email'
+      },
+      phone: {
+        pattern : 'phone'
+      },
+      fb: {
+        pattern : 'url'
+      },
+    },
+    message : {
+      userName: {
+        required : 'trường này không được để trống'
+      },
+      title: {
+        required : 'trường này không được để trống'
+      },
+      phone: {
+        pattern : 'nhập số diện thoại không đúng định dạng'
+      },
+      email: {
+        pattern : 'nhập email không đúng định dạng'
+      },
+      fb:  {
+        pattern : 'nhập url không đúng định dạng'
+      },
+    }
   })
-  let [error , setError] = useState({})
-
-
-  function inputChange (e) {
-    let val = e.target.value
-    let name = e.target.getAttribute('name')
-    setForm({
-      ...form,
-      [name] : val
-    })
-  }
-
-  function submitBtn () {
-    let error = {} 
-    if(!form.userName) {
-      error['userName'] = "Username không được để trống"
+  
+  function submitBtn() {
+    let error = submit()
+    console.log(error)
+    if(Object.keys(error).length === 0) {
+      // alert("thành công")
     }
-    if(!form.email) {
-      error['email'] = "email không được để trống"
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.email)) {
-      error['email'] = "email không đúng định dạng"
-    }
-    if(!form.website) {
-      error['website'] = "fb không được để trống"
-    }
-    if(!form.phone) {
-      error['phone'] = "phone không được để trống"
-    }
-    if(!form.note) {
-      error['title'] = "note không được để trống"
-    }
-    setError(error)
-    if(!Object.keys(error).length === 0) {
-      alert("thành công")
-    }
-  }
-
+  } 
+  
   return (
     <>
       <div className="overlay_nav" />
@@ -97,7 +105,7 @@ export default function Cooperate() {
               <input type="text" placeholder="Tiêu đề liên hệ"  onChange={inputChange} name="title" value={form.title}/>
             </label>
             {
-              error.title && <p className='error' style={style.inputStyle}>{error.title}</p>
+              error.fb && <p className='error' style={style.inputStyle}>{error.fb}</p>
             }
             <label>
               <p>Nội dung<span>*</span></p>
